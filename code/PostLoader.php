@@ -15,9 +15,9 @@ class PostLoader
         return json_decode($encoded_posts);
     }
 
-    public static function savePost($guest_post)
+    public static function savePost($decoded_posts, $new_post)
     {
-        $decoded_posts[] = $guest_post;
+        $decoded_posts[] = $new_post;
         $all_encoded = json_encode($decoded_posts);
         file_put_contents("guestbook.json", $all_encoded, 0);
     }

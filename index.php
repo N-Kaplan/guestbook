@@ -25,9 +25,15 @@ $allPosts = [];
 $allPosts[] = $test_message;
 $allPosts_encoded = json_encode($allPosts);
 
-$test = PostLoader::readPosts($allPosts_encoded);
-var_dump($test);
-PostLoader::savePost($test_message);
+//$test = PostLoader::readPosts($allPosts_encoded);
+//var_dump($test);
+//PostLoader::savePost($test_message);
+
+$guestbook = file_get_contents("guestbook.json");
+$guestbook_decoded = PostLoader::readPosts($guestbook);
+var_dump($guestbook_decoded);
+PostLoader::savePost($guestbook_decoded, $test_message);
+
 
 //var_dump($allPosts_encoded);
 
