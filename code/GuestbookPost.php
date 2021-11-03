@@ -22,9 +22,9 @@ class GuestbookPost
     }
 
     /**
-     * @param string $date
+     * @param DateTime $date
      */
-    public function setDate(string $date): void
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -52,7 +52,15 @@ class GuestbookPost
      * @param string $author
      */
 
-
+    //courtesy of Jorg von Dzerzawa
+    public function toArr () : array {
+        $arr = [];
+        $arr["title"] = $this->title;
+        $arr["date"] = $this->date;
+        $arr["content"] = $this->content;
+        $arr["author"] = $this->author;
+        return $arr;
+    }
 
 
 }

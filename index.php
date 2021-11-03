@@ -21,18 +21,16 @@ $test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' =
 $test_encoded = json_encode($test_message);
 //var_dump($test_encoded);
 
-$allPosts = [];
-$allPosts[] = $test_message;
-$allPosts_encoded = json_encode($allPosts);
-
-//$test = PostLoader::readPosts($allPosts_encoded);
-//var_dump($test);
-//PostLoader::savePost($test_message);
-
+//$allPosts = [];
+//$allPosts[] = $test_message;
+//$allPosts_encoded = json_encode($allPosts);
 $guestbook = file_get_contents("guestbook.json");
 $guestbook_decoded = PostLoader::readPosts($guestbook);
-var_dump($guestbook_decoded);
-PostLoader::savePost($guestbook_decoded, $test_message);
+//var_dump($guestbook_decoded);
+//PostLoader::savePost($guestbook_decoded, $test_message);
+
+
+var_dump($guestbook);
 
 
 //var_dump($allPosts_encoded);
@@ -54,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     $current_post->setContent($_POST['message']);
 
     $post_json_format = json_encode($current_post);
+
+     PostLoader::savePost($guestbook_decoded, $current_post);
 }
 
 whatIsHappening();
