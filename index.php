@@ -16,6 +16,21 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
+$test_date =  new DateTime();
+$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
+$test_encoded = json_encode($test_message);
+//var_dump($test_encoded);
+
+$allPosts = [];
+$allPosts[] = $test_message;
+$allPosts_encoded = json_encode($allPosts);
+
+$test = PostLoader::readPosts($allPosts_encoded);
+var_dump($test);
+PostLoader::savePost($test_message);
+
+//var_dump($allPosts_encoded);
+
 if ($_SERVER["REQUEST_METHOD"] === "POST")
 {
     $current_post = new GuestbookPost();
@@ -32,14 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     $current_post->setAuthor($_POST['name']);
     $current_post->setContent($_POST['message']);
 
-
     $post_json_format = json_encode($current_post);
 }
 
 whatIsHappening();
 
-$test_date =  new DateTime();
-$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
-print_r($test_message);
+
 
 require 'form-view.php';
