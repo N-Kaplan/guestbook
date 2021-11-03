@@ -1,6 +1,7 @@
 <?php
 
-require "code/Post.php";
+require "code/GuestbookPost.php";
+require "code/PostLoader.php";
 session_start();
 
 function whatIsHappening()
@@ -17,14 +18,28 @@ function whatIsHappening()
 
 if ($_SERVER["REQUEST_METHOD"] === "POST")
 {
-    $date = date("F j, Y, g:i a");
+    $current_post = new GuestbookPost();
+    foreach ($_POST as $key=>$value) {
+        if (empty($value))
+        {
+            //error message
+        } else {
+            $_POST[$key] = htmlspecialchars($value);
+        }
+    }
 
-    //create new post
-    $current_post = new Post($date);
+    $current_post->setTitle($_POST['title']);
+    $current_post->setAuthor($_POST['name']);
+    $current_post->setContent($_POST['message']);
+
+
+    $post_json_format = json_encode($current_post);
 }
 
 whatIsHappening();
-print_r($current_post);
 
+$test_date =  new DateTime();
+$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
+print_r($test_message);
 
 require 'form-view.php';
