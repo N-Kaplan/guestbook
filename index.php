@@ -1,4 +1,6 @@
 <?php
+
+require "code/Post.php";
 session_start();
 
 function whatIsHappening()
@@ -15,18 +17,14 @@ function whatIsHappening()
 
 if ($_SERVER["REQUEST_METHOD"] === "POST")
 {
-    foreach ($_POST as $key=>$value) {
-        if (empty($value))
-        {
-            //error message
-        } else {
-            $_POST[$key] = htmlspecialchars($value);
-        }
-    }
+    $date = date("F j, Y, g:i a");
+
+    //create new post
+    $current_post = new Post($date);
 }
 
 whatIsHappening();
-
+print_r($current_post);
 
 
 require 'form-view.php';
