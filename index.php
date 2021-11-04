@@ -17,10 +17,7 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-
-
 $guestbook = file_get_contents("guestbook.json");
-
 
 if ($_SERVER["REQUEST_METHOD"] === "POST")
 {
@@ -39,15 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $current_post->setAuthor($_POST['name']);
         $current_post->setContent($_POST['message']);
         PostLoader::savePost($guestbook, $current_post);
-        echo $current_post->displayPost();
     }
-
 
     $loader = new PostLoader();
     $all_posts = $loader->readPosts($guestbook);
-    PostLoader::displayPosts($all_posts, intval($_POST['display_nr']));
+    $display_guestbook = PostLoader::displayPosts($all_posts, intval($_POST['display_nr']));
+    //var_dump($display_guestbook);
 }
-
 require 'form-view.php';
 
-whatIsHappening();

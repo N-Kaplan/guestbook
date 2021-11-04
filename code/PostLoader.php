@@ -36,7 +36,7 @@ class PostLoader
         $max = (count($all_posts) < $max_posts) ? count($all_posts) : $max_posts;
         $display_arr = array_slice($all_posts,0, $max);
         foreach ($display_arr as $post) {
-            echo $post->displayPost();
+            $display .= $post->displayPost();
         }
         return $display;
     }

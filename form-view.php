@@ -17,6 +17,8 @@
         <input type="number" name="display_nr" id="display_nr" min="1" max="100" value="20">
         <button type="submit">Submit</button>
     </form>
-
+    <section>
+        <?php if (isset($display_guestbook) && !empty($display_guestbook)){echo "<div>" . $display_guestbook . "</div>";} ?>
+    </section>
 </body>
 </html>
