@@ -16,22 +16,11 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-$test_date =  new DateTime();
-$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
-$test_encoded = json_encode($test_message);
-//var_dump($test_encoded);
+//$test_date =  new DateTime();
+//$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
+//$test_encoded = json_encode($test_message);
 
-//$allPosts = [];
-//$allPosts[] = $test_message;
-//$allPosts_encoded = json_encode($allPosts);
 $guestbook = file_get_contents("guestbook.json");
-$guestbook_decoded = PostLoader::readPosts($guestbook);
-//var_dump($guestbook_decoded);
-//PostLoader::savePost($guestbook_decoded, $test_message);
-
-
-var_dump($guestbook);
-
 
 //var_dump($allPosts_encoded);
 
@@ -51,12 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     $current_post->setAuthor($_POST['name']);
     $current_post->setContent($_POST['message']);
 
-    $post_json_format = json_encode($current_post);
 
-     PostLoader::savePost($guestbook_decoded, $current_post);
+    PostLoader::savePost($guestbook, $current_post);
+    var_dump(PostLoader::readPosts($guestbook));
+
+    echo $current_post->displayPost();
+    $all_posts = PostLoader::readPosts($guestbook);
+    echo PostLoader::displayPosts($all_posts);
 }
 
-whatIsHappening();
+//whatIsHappening();
+
+//echo PostLoader::wrapElement("hello", "p");
+//echo PostLoader::wrapElement("again", "h1");
 
 
 

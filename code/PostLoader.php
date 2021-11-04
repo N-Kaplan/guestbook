@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 class PostLoader
 {
-    private GuestbookPost $guest_post;
+    private const MAX_POSTS = 20;
+    //private GuestbookPost $guest_post;
 
     // first post as example
     //add new post
@@ -15,10 +16,25 @@ class PostLoader
         return json_decode($encoded_posts);
     }
 
-    public static function savePost($decoded_posts, $guest_post)
+    public static function savePost($encoded_posts, $guest_post)
     {
-        $decoded_posts[] = $guest_post->toArr();
+        $decoded_posts = json_decode($encoded_posts);
+        array_unshift($decoded_posts, $guest_post->toArr());
         $all_encoded = json_encode($decoded_posts);
-        file_put_contents("guestbook.json", $all_encoded, 0);
+        file_put_contents("guestbook.json", $all_encoded);
+    }
+
+    public static function displayPosts($all_posts): string
+    {
+        $display = "";
+        $max = (count($all_posts) < self::MAX_POSTS) ? count($all_posts) : self::MAX_POSTS;
+        $display_arr = array_splice($all_posts, $max);
+        foreach ($display_arr as $post) {
+            //$display . $post->displayPost();
+            var_dump($post);
+        }
+        return $display;
+
+
     }
 }

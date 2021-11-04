@@ -46,14 +46,11 @@ class GuestbookPost
     }
 
     /**
-     * @param string $title
-     * @param string $date
-     * @param string $content
-     * @param string $author
+     * @return array
      */
 
     //courtesy of Jorg von Dzerzawa
-    public function toArr () : array {
+    public function toArr() : array {
         $arr = [];
         $arr["title"] = $this->title;
         $arr["date"] = $this->date;
@@ -62,5 +59,17 @@ class GuestbookPost
         return $arr;
     }
 
+    private static function wrapElement($element, $tag): string
+    {
+        return "<$tag>$element</$tag>";
+    }
 
+    public function displayPost(): string
+    {
+        return
+        self::wrapElement($this->title, 'h3') . "<br>" .
+        self::wrapElement($this->content, 'p') . "<br>" .
+        self::wrapElement($this->author, 'h5'). "<br>" .
+        self::wrapElement($this->date->format('d-m-Y H:i:s'), 'h5') . "<br>";
+    }
 }
