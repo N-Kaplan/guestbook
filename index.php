@@ -42,11 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 
     PostLoader::savePost($guestbook, $current_post);
-    var_dump(PostLoader::readPosts($guestbook));
+   // var_dump(PostLoader::readPosts($guestbook));
 
     echo $current_post->displayPost();
     $all_posts = PostLoader::readPosts($guestbook);
-    echo PostLoader::displayPosts($all_posts);
+    PostLoader::displayPosts($all_posts);
 }
 
 //whatIsHappening();

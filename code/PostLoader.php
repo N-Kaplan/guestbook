@@ -11,9 +11,14 @@ class PostLoader
     // save entire array to file
     //public static function readPosts()
 
-    public static function readPosts($encoded_posts)
-    {
-        return json_decode($encoded_posts);
+    public function readPosts($encoded_posts)
+    {   //cast objects in json file as guestbookpost objects
+        $objects = json_decode($encoded_posts);
+        foreach ($objects as $object) {
+            $post = new GuestbookPost();
+            $post->set($object);
+        }
+        return $objects;
     }
 
     public static function savePost($encoded_posts, $guest_post)
@@ -28,9 +33,9 @@ class PostLoader
     {
         $display = "";
         $max = (count($all_posts) < self::MAX_POSTS) ? count($all_posts) : self::MAX_POSTS;
-        $display_arr = array_splice($all_posts, $max);
+        $display_arr = array_slice($all_posts,0, $max);
         foreach ($display_arr as $post) {
-            //$display . $post->displayPost();
+            //echo $post->displayPost();
             var_dump($post);
         }
         return $display;

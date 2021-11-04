@@ -13,6 +13,7 @@ class GuestbookPost
         $this->date = new DateTime();
     }
 
+
     /**
      * @param string $title
      */
@@ -72,4 +73,10 @@ class GuestbookPost
         self::wrapElement($this->author, 'h5'). "<br>" .
         self::wrapElement($this->date->format('d-m-Y H:i:s'), 'h5') . "<br>";
     }
+
+    //function to cast decoded json objects as Guestbookpost objects
+    public function set($post_to_display) {
+        foreach ($post_to_display as $key=>$value) $this->{$key} = $value;
+    }
+
 }
