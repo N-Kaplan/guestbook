@@ -75,8 +75,15 @@ class GuestbookPost
     }
 
     //function to cast decoded json objects as Guestbookpost objects
+    //todo: move this function to a dedicated Converter class
     public function set($post_to_display) {
-        foreach ($post_to_display as $key=>$value) $this->{$key} = $value;
+        foreach ($post_to_display as $key=>&$value) {
+            if ($key === "date") {
+                $this->{$key} = new DateTime($value->date);
+            } else {
+                $this->{$key} = $value;
+            }
+        }
     }
 
 }

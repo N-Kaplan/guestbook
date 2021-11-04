@@ -22,7 +22,6 @@ function whatIsHappening()
 
 $guestbook = file_get_contents("guestbook.json");
 
-//var_dump($allPosts_encoded);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST")
 {
@@ -40,20 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     $current_post->setAuthor($_POST['name']);
     $current_post->setContent($_POST['message']);
 
-
     PostLoader::savePost($guestbook, $current_post);
-   // var_dump(PostLoader::readPosts($guestbook));
 
     echo $current_post->displayPost();
-    $all_posts = PostLoader::readPosts($guestbook);
+    $loader = new PostLoader();
+    $all_posts = $loader->readPosts($guestbook);
     PostLoader::displayPosts($all_posts);
 }
-
-//whatIsHappening();
-
-//echo PostLoader::wrapElement("hello", "p");
-//echo PostLoader::wrapElement("again", "h1");
-
-
 
 require 'form-view.php';
