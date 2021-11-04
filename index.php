@@ -45,7 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
     $loader = new PostLoader();
     $all_posts = $loader->readPosts($guestbook);
-    PostLoader::displayPosts($all_posts);
+    PostLoader::displayPosts($all_posts, intval($_POST['display_nr']));
 }
 
 require 'form-view.php';
+
+whatIsHappening();

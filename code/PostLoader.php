@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 class PostLoader
 {
-    private const MAX_POSTS = 20;
+    //private const MAX_POSTS = 20;
+    private int $max_posts;
+    private string $encoded_posts;
 
-    public function readPosts($encoded_posts)
+    public function readPosts($encoded_posts): array
     {
         $this->encoded_posts = $encoded_posts;
         //cast objects in json file as guestbookpost objects
@@ -27,10 +29,11 @@ class PostLoader
         file_put_contents("guestbook.json", $all_encoded);
     }
 
-    public static function displayPosts($all_posts): string
+    public static function displayPosts($all_posts, $max_posts): string
     {
         $display = "";
-        $max = (count($all_posts) < self::MAX_POSTS) ? count($all_posts) : self::MAX_POSTS;
+        //$max = (count($all_posts) < self::MAX_POSTS) ? count($all_posts) : self::MAX_POSTS;
+        $max = (count($all_posts) < $max_posts) ? count($all_posts) : $max_posts;
         $display_arr = array_slice($all_posts,0, $max);
         foreach ($display_arr as $post) {
             echo $post->displayPost();
