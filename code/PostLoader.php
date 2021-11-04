@@ -13,10 +13,12 @@ class PostLoader
         //cast objects in json file as guestbookpost objects
         $objects = json_decode($encoded_posts);
         $posts = [];
-        foreach ($objects as &$object) {
-            $post = new GuestbookPost();
-            $post->set($object);
-            $posts[] = $post;
+        if (isset($objects)) {
+            foreach ($objects as &$object) {
+                $post = new GuestbookPost();
+                $post->set($object);
+                $posts[] = $post;
+            }
         }
         return $posts;
     }
