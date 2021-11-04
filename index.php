@@ -2,6 +2,7 @@
 
 require "code/GuestbookPost.php";
 require "code/PostLoader.php";
+
 session_start();
 
 function whatIsHappening()
@@ -16,9 +17,7 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-//$test_date =  new DateTime();
-//$test_message = (object) array('date' => $test_date, 'title' => 'hi', 'author' => 'bob', 'content'=> 'some text');
-//$test_encoded = json_encode($test_message);
+
 
 $guestbook = file_get_contents("guestbook.json");
 
@@ -29,19 +28,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     foreach ($_POST as $key=>$value) {
         if (empty($value))
         {
-            //error message
+            $error = "All fields are required.";
         } else {
             $_POST[$key] = htmlspecialchars($value);
         }
     }
 
-    $current_post->setTitle($_POST['title']);
-    $current_post->setAuthor($_POST['name']);
-    $current_post->setContent($_POST['message']);
+    if (!empty($_POST['title']) && !empty($_POST['name']) && !empty($_POST['message'])) {
+        $current_post->setTitle($_POST['title']);
+        $current_post->setAuthor($_POST['name']);
+        $current_post->setContent($_POST['message']);
+        PostLoader::savePost($guestbook, $current_post);
+        echo $current_post->displayPost();
+    }
 
-    PostLoader::savePost($guestbook, $current_post);
 
-    echo $current_post->displayPost();
     $loader = new PostLoader();
     $all_posts = $loader->readPosts($guestbook);
     PostLoader::displayPosts($all_posts);
