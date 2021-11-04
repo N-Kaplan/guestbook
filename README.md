@@ -54,5 +54,9 @@ You can either use [json_encode()](https://php.net/json_encode) or [serialize()]
 - Want to work with serialize: check out https://www.php.net/manual/en/language.oop5.magic.php#object.serialize
 
 ### Personal Notes
-- Consider moving functional logic to a dedicated class, e.g. put the converter function in its own Converter class.
-- If objects has to be stored in json format, have the constructor create them with all parameters, rather than use setters. This way you might avoid workarounds with casting the objects read from the json file from stdClass to their original class.
+* Consider moving functional logic to a dedicated class, e.g. put the converter function in its own Converter class.
+* If objects has to be stored in json format, have the constructor create them with all parameters, rather than use setters. This way you might avoid workarounds with casting the objects read from the json file from stdClass to their original class.
+* IMPORTANT: workflow with json file:
+  * read the file (if not empty);
+  * write to the file
+  * read the file again (by missing this step, the functions using the variable with its contents will still be a step behind).

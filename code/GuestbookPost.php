@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 class GuestbookPost
 {
-    private string $title;
-    private DateTime $date;
-    private string $content;
-    private string $author;
+    private ?string $title = null;
+    private ?DateTime $date = null;
+    private ?string $content= null;
+    private ?string $author= null;
 
     public function __construct()
-    {
-        $this->date = new DateTime();
-    }
+    {}
 
 
     /**
@@ -25,9 +23,9 @@ class GuestbookPost
     /**
      * @param DateTime $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(): void
     {
-        $this->date = $date;
+        $this->date = new DateTime();
     }
 
     /**
@@ -67,11 +65,17 @@ class GuestbookPost
 
     public function displayPost(): string
     {
-        return
-        self::wrapElement($this->title, 'h3') . "<br>" .
-        self::wrapElement($this->content, 'p') . "<br>" .
-        self::wrapElement($this->author, 'h5'). "<br>" .
-        self::wrapElement($this->date->format('d-m-Y H:i:s'), 'h5') . "<br>";
+        var_dump($this->date);
+        if ($this->date !== null) {
+            return
+                self::wrapElement($this->title, 'h3') . "<br>" .
+                self::wrapElement($this->content, 'p') . "<br>" .
+                self::wrapElement($this->author, 'h5') . "<br>" .
+                self::wrapElement($this->date->format('d-m-Y H:i:s'), 'h5') . "<br>";
+        }
+        else {
+            return '';
+        }
     }
 
     //function to cast decoded json objects as Guestbookpost objects
